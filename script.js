@@ -1,4 +1,3 @@
-
 // переключение меню
 const toggleBtns = document.querySelectorAll('.toggle-menu');
 const converter = document.querySelector('.converter');
@@ -18,14 +17,32 @@ for (let item of toggleBtns) {
     })
 };
 
+// переключение аудио
+const audioPlay = () => {
+    const audio = document.getElementById('audio');
+    const player = document.getElementById('player');
+
+    function getCharcodeAudio(e) {
+        if (!e.target.checked) {
+            player.pause();
+        } else if (e.target.checked) {
+            player.play();
+        }
+    }
+    
+
+    audio.addEventListener('change', getCharcodeAudio);
+    console.log(audio.checked);
+}
+
+audioPlay();
+
 // функция динамической отрисовки карточек и выпадающего списка в конвертере
 const renderContent = (result) => {
     let content = document.getElementById('data');
     let formSelect = document.getElementById('select');
     let colorCourse;
     let cardsFavor = document.querySelector('.cardsFavor');
-
-
 
     // добавление в избранное
 
