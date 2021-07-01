@@ -4,15 +4,28 @@
     box-sizing: border-box;
 }
 
-body {
+body:not(current_rate) {
     display: flex;
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
-    background: #161623;
+    background: linear-gradient(120deg, #2196f3, #161623);
+    /* animation: animate 20s linear infinite;  */
 }
 
-body::before {
+/* @keyframes animate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        filter: hue-rotate(360deg);
+    }
+    100% {
+        filter: hue-rotate(0deg);
+    }
+} */
+
+/* body::before {
     content: '';
     position: absolute;
     top: 0;
@@ -21,8 +34,8 @@ body::before {
     height: 210%;
     background: linear-gradient(#f00, #f0f);
     clip-path: circle(30% at right 70%);
-}
-
+} */
+/* 
 body::after {
     content: '';
     position: absolute;
@@ -32,7 +45,7 @@ body::after {
     height: 100%;
     background: linear-gradient(#2196f3, #e91e63);
     clip-path: circle(20% at 10% 10%);
-}
+} */
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -208,12 +221,15 @@ input::-webkit-inner-spin-button {
 .cardFavor h2 {
     color: #fff;
     padding: 20px 0;
+    filter: none;
 }
 .cardFavor h3.top {
     color: #e91e63;
+    filter: none;
 }
 .cardFavor h3.bottom {
     color: rgb(19, 189, 61);
+    filter: none;
 }
 
 .cards>h2 {
@@ -279,9 +295,11 @@ input::-webkit-inner-spin-button {
 }
 .container .card .content h3.top {
     color: #e91e63;
+    filter: none;
 }
 .container .card .content h3.bottom {
     color: rgb(19, 189, 61);
+    filter: none;
 }
 
 .container .card .content .descr {
@@ -379,8 +397,47 @@ input::-webkit-inner-spin-button {
     }
 }
 
+@media (max-width: 500px) {
+    .header .container {
+        justify-content: center;
+    }
+    .converter__h2 {
+        font-size: 1em;
+    }
+    .converter__title-out>h4,
+    .converter__title-in>h4 {
+        font-size: 0.7em;
+    }
+    .converter__title-out>select,
+    .converter__title-in>select {
+        font-size: 0.3em;
+    }
+    .form-control {
+        margin-top: 20px;
+    }
+    .converter__title {
+        display: block;
+    }
+    .converter__title-out {
+        padding-bottom: 50px;
+    }
+}
+
 @media (max-width: 370px) {
     .toggle-menu {
         font-size: 1.4em;
+    }
+}
+@media (max-width: 320px) {
+    .converter {
+        padding: 0;
+        padding-top: 10px;
+    }
+    .form-control {
+        padding: 10px 2px;
+    }
+    .converter__title-out>select,
+    .converter__title-in>select {
+        font-size: 0.2em;
     }
 }

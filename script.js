@@ -1,33 +1,4 @@
-// анимация карточек
-VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
-    max: 10,
-    speed: 400,
-    glare: true,
-    "max-glare": 1
-});
-VanillaTilt.init(document.querySelectorAll(".card"), {
-    max: 25,
-    speed: 100,
-    glare: true,
-    "max-glare": 1
-});
-VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
-    max: 7,
-    speed: 400
-});
-VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
-    max: 15,
-    speed: 400,
-    glare: true,
-    "max-glare": 1
-});
-VanillaTilt.init(document.querySelectorAll(".converter"), {
-    max: 10,
-    speed: 400,
-    glare: true,
-    "max-glare": 1,
-    perspective: 2000
-});
+
 // переключение меню
 const toggleBtns = document.querySelectorAll('.toggle-menu');
 const converter = document.querySelector('.converter');
@@ -52,9 +23,45 @@ const renderContent = (result) => {
     let content = document.getElementById('data');
     let formSelect = document.getElementById('select');
     let colorCourse;
+    let cardsFavor = document.querySelector('.cardsFavor');
+
+
+
+    // добавление в избранное
+
+    function getCharcodeCard(e) {
+        let event = e.target;
+        let colorCourse;
+
+        if (!event.matches('input') && event.tagName === 'INPUT' && event.type === 'checkbox') return
+
+        if (event.checked) {
+
+            if (result.Valute[event.id].Value < result.Valute[event.id].Previous) {
+                colorCourse = 'bottom';
+            } else if (result.Valute[event.id].Value > result.Valute[event.id].Previous) {
+                colorCourse = 'top';
+            }
+
+            cardsFavor.innerHTML += `
+            <div class="cardFavor" id="${result.Valute[event.id].CharCode}">
+                <h2>${result.Valute[event.id].CharCode}</h2>
+                <h3 class="course ${colorCourse}">${result.Valute[event.id].Value.toFixed(2)}</h3>
+            </div>
+            `
+
+        } else if (event.checked === false) {
+            let removeCard = document.getElementById(`${result.Valute[event.id].CharCode}`);
+            removeCard.parentNode.removeChild(removeCard);
+        }
+
+        localStorageUtil.putCards(`${result.Valute[event.id].CharCode}`);
+
+    }
+    const addCard = document.querySelector('.cards');
+    addCard.addEventListener('change', getCharcodeCard);
 
     Object.values(result.Valute).map((currencyCode) => {
-        
 
         if (currencyCode.Value < currencyCode.Previous) {
             colorCourse = 'bottom';
@@ -87,11 +94,68 @@ const renderContent = (result) => {
         <option value="${currencyCode.CharCode}">${currencyCode.Nominal} ${currencyCode.Name}</option>
         `
     })
+
+    // сохранение в localStorage
+    class LocalStorageUtil {
+        constructor() {
+            this.keyName = "cards";
+        }
+
+        getCards() {
+            const cardsLocalStorage = localStorage.getItem(this.keyName);
+            if (cardsLocalStorage !== null) {
+                return JSON.parse(cardsLocalStorage);
+            }
+            return [];
+        }
+
+        putCards(id) {
+            let cards = this.getCards();
+            let pushCards = false;
+            const index = cards.indexOf(id);
+
+            if (index === -1) {
+                cards.push(id);
+                pushCards = true;
+            } else {
+                cards.splice(index, 1);
+            }
+
+            localStorage.setItem(this.keyName, JSON.stringify(cards));
+
+            return {
+                pushCards: pushCards,
+                cards: cards
+            }
+        }
+
+    }
+    const localStorageUtil = new LocalStorageUtil();
+    const storageCards = localStorageUtil.getCards();
+
+    storageCards.forEach(card => {
+        let checkedCard = document.querySelector(`#${card}`);
+
+        if (result.Valute[card].Value < result.Valute[card].Previous) {
+            colorCourse = 'bottom';
+        } else if (result.Valute[card].Value > result.Valute[card].Previous) {
+            colorCourse = 'top';
+        }
+
+        cardsFavor.innerHTML += `
+            <div class="cardFavor" id="${card}">
+                <h2>${card}</h2>
+                <h3 class="course ${colorCourse}">${result.Valute[card].Value.toFixed(2)}</h3>
+            </div>
+            `
+
+        checkedCard.setAttribute('checked', 'true');
+    })
 }
 
 getCurrencies();
 
-setInterval(getCurrencies, 1800000);
+// setInterval(getCurrencies, 1800000);
 
 // функция получения курса валют и отображения их на странице
 async function getCurrencies() {
@@ -101,7 +165,6 @@ async function getCurrencies() {
 
     renderContent(result);
     convertValue(result);
-    addCard(result);
 }
 
 // конвертер валюты
@@ -119,80 +182,33 @@ const convertValue = (result) => {
     }
 }
 
-
-// добавление в избранное
-
-const addCard = (result) => {
-    let cardsFavor = document.querySelector('.cardsFavor');
-
-    function getCharcodeCard(e) {
-        let event = e.target;
-        let colorCourse;
-
-        if (!event.matches('input') && event.tagName === 'INPUT' && event.type === 'checkbox') return
-
-        if (event.checked) {
-            
-            if (result.Valute[event.id].Value < result.Valute[event.id].Previous) {
-                colorCourse = 'bottom';
-            } else if (result.Valute[event.id].Value > result.Valute[event.id].Previous) {
-                colorCourse = 'top';
-            }
-
-            cardsFavor.innerHTML += `
-            <div class="cardFavor" id="${result.Valute[event.id].CharCode}">
-                <h2>${result.Valute[event.id].CharCode}</h2>
-                <h3 class="course ${colorCourse}">${result.Valute[event.id].Value.toFixed(2)}</h3>
-            </div>
-            `
-
-        } else if (event.checked === false) {
-            let removeCard = document.getElementById(`${result.Valute[event.id].CharCode}`);
-            removeCard.parentNode.removeChild(removeCard);
-        }
-
-        // сохранение в localStorage
-        class LocalStorageUtil {
-            constructor() {
-                this.keyName = "cards";
-            }
-
-            getCards() {
-                const cardsLocalStorage = localStorage.getItem(this.keyName);
-                if (cardsLocalStorage !== null) {
-                    return JSON.parse(cardsLocalStorage);
-                }
-                return [];
-            }
-
-            putCards(id) {
-                let cards = this.getCards();
-                let pushCards = false;
-                const index = cards.indexOf(id);
-
-                if (index === -1) {
-                    cards.push(id);
-                    pushCards = true;
-                } else {
-                    cards.splice(index, 1);
-                }
-
-                localStorage.setItem(this.keyName, JSON.stringify(cards));
-
-                return {
-                    pushCards: pushCards,
-                    cards: cards
-                }
-            }
-
-        }
-
-        const localStorageUtil = new LocalStorageUtil();
-        localStorageUtil.putCards(`${result.Valute[event.id].CharCode}`);
-        const a = localStorageUtil.getCards();
-        console.log(a);
-
-    }
-    const addCard = document.querySelector('.cards');
-    addCard.addEventListener('change', getCharcodeCard);
-}
+// анимация карточек
+VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
+    max: 10,
+    speed: 400,
+    glare: true,
+    "max-glare": 1
+});
+VanillaTilt.init(document.querySelectorAll(".card"), {
+    max: 25,
+    speed: 100,
+    glare: true,
+    "max-glare": 1
+});
+VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
+    max: 7,
+    speed: 400
+});
+VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 1
+});
+// VanillaTilt.init(document.querySelectorAll(".converter"), {
+//     max: 10,
+//     speed: 400,
+//     glare: true,
+//     "max-glare": 1,
+//     perspective: 2000
+// });

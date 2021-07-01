@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exchange Rates</title>
+    <title>Currency Exchange</title>
+    <link rel="shortcut icon" href="baks.ico" type="image/x-icon">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -28,27 +29,26 @@
                 <h2 class="converter__h2">Конвертер валют</h2>
 
                 <div class="converter__title">
+
                     <div class="converter__title-out">
-                        <label for="name">Отдаю:</label>
+                        <h4 for="name">Отдаю:</h4>
                         <select disabled class="form-control" id="exampleFormControlSelect1">
                             <option value="RUB" selected>RUB — Рубли</option>
                         </select>
+                        <div class="converter__inputs-item">
+                            <input id="input" type="number" class="form-control" id="name" autofocus />
+                        </div>
                     </div>
                     <div class="converter__title-in">
-                        <label for="name">Получаю:</label>
+                        <h4 for="name">Получаю:</h4>
                         <select id="select" class="form-control" id="exampleFormControlSelect2">
                         </select>
+                        <div class="converter__inputs-item">
+                            <input id="result" type="number" class="form-control" id="name" />
+                        </div>
                     </div>
                 </div>
 
-                <div class="converter__inputs">
-                    <div class="converter__inputs-item">
-                        <input id="input" type="number" class="form-control" id="name" autofocus />
-                    </div>
-                    <div class="converter__inputs-item">
-                        <input id="result" type="number" class="form-control" id="name" />
-                    </div>
-                </div>
             </form>
         </div>
     </div>
@@ -71,8 +71,8 @@
     </div>
 
 
-    <script type="text/javascript" src="vanilla-tilt.js"></script>
-    <script src="script.js"></script>
+    <script async defer type="text/javascript" src="vanilla-tilt.js"></script>
+    <script async defer src="script.js"></script>
 </body>
 
 </html>
