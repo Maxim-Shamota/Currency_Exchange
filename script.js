@@ -1,3 +1,4 @@
+
 // переключение меню
 const toggleBtns = document.querySelectorAll('.toggle-menu');
 const converter = document.querySelector('.converter');
@@ -29,10 +30,7 @@ const audioPlay = () => {
             player.play();
         }
     }
-    
-
     audio.addEventListener('change', getCharcodeAudio);
-    console.log(audio.checked);
 }
 
 audioPlay();
@@ -199,33 +197,42 @@ const convertValue = (result) => {
     }
 }
 
-// анимация карточек
-VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
-    max: 10,
-    speed: 400,
-    glare: true,
-    "max-glare": 1
-});
-VanillaTilt.init(document.querySelectorAll(".card"), {
-    max: 25,
-    speed: 100,
-    glare: true,
-    "max-glare": 1
-});
-VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
-    max: 7,
-    speed: 400
-});
-VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
-    max: 15,
-    speed: 400,
-    glare: true,
-    "max-glare": 1
-});
-// VanillaTilt.init(document.querySelectorAll(".converter"), {
-//     max: 10,
-//     speed: 400,
-//     glare: true,
-//     "max-glare": 1,
-//     perspective: 2000
-// });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // анимация карточек
+    VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
+        max: 10,
+        speed: 400,
+        glare: true,
+        "max-glare": 1
+    });
+    VanillaTilt.init(document.querySelectorAll(".card"), {
+        max: 25,
+        speed: 100,
+        glare: true,
+        "max-glare": 1
+    });
+    VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
+        max: 7,
+        speed: 400
+    });
+    VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
+        max: 15,
+        speed: 400,
+        glare: true,
+        "max-glare": 1
+    });
+    // VanillaTilt.init(document.querySelectorAll(".converter"), {
+    //     max: 10,
+    //     speed: 400,
+    //     glare: true,
+    //     "max-glare": 1,
+    //     perspective: 2000
+    // });
+})
+
+
+
+
+
