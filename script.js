@@ -110,7 +110,7 @@ const renderContent = (result) => {
         <option value="${currencyCode.CharCode}">${currencyCode.Nominal} ${currencyCode.Name}</option>
         `,
 
-        formSelectIn.innerHTML += `
+            formSelectIn.innerHTML += `
     <option value="${currencyCode.CharCode}">${currencyCode.Nominal} ${currencyCode.Name}</option>
     `
     })
@@ -200,42 +200,32 @@ const convertValue = (result) => {
     select.oninput = convert;
 
     function convert() {
-        if ( select.value == selectIn.value ) { 
+        if (select.value == selectIn.value) {
             inputOut.value = inputIn.value;
-        } else if ( selectIn.value == "RUB") {
+        } else if (selectIn.value == "RUB") {
             inputOut.value = (parseFloat(inputIn.value) / result.Valute[select.value].Value).toFixed(2);
-        } else if ( select.value == "RUB") {
+        } else if (select.value == "RUB") {
             inputOut.value = (parseFloat(inputIn.value) * result.Valute[selectIn.value].Value / 1).toFixed(2);
         } else {
             inputOut.value = (parseFloat(inputIn.value) * result.Valute[selectIn.value].Value / result.Valute[select.value].Value).toFixed(2);
         }
-        
+
     }
 }
 
-    // анимация карточек
-    VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
-        max: 10,
-        speed: 400,
-        glare: true,
-        "max-glare": 1
-    });
-    VanillaTilt.init(document.querySelectorAll(".card"), {
-        max: 25,
-        speed: 100,
-        glare: true,
-        "max-glare": 1
-    });
-    VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
-        max: 7,
-        speed: 400
-    });
-    VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
-        max: 15,
-        speed: 400,
-        glare: true,
-        "max-glare": 1
-    });
+// анимация карточек
+const contentAnim = document.querySelector('.content');
+
+VanillaTilt.init(document.querySelectorAll(".cards__h2"), {
+    max: 7,
+    speed: 400
+});
+VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 1
+});
     // VanillaTilt.init(document.querySelectorAll(".converter"), {
     //     max: 10,
     //     speed: 400,
@@ -243,3 +233,27 @@ const convertValue = (result) => {
     //     "max-glare": 1,
     //     perspective: 2000
     // });
+
+const dataAnim = document.getElementById("data");
+dataAnim.addEventListener('mouseover', function(e) {
+    if(e.target.classList == 'card') {
+        VanillaTilt.init(document.querySelectorAll(".card"), {
+            max: 25,
+            speed: 100,
+            glare: true,
+            "max-glare": 1
+        });
+    }
+});
+const favorAnim = document.querySelector(".cardsFavor");
+favorAnim.addEventListener('mouseover', function(e) {
+    if(e.target.classList == 'cardFavor') {
+        VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
+            max: 25,
+            speed: 100,
+            glare: true,
+            "max-glare": 1,
+            scale: 1.1
+        });
+    }
+})

@@ -309,11 +309,15 @@ input::-webkit-inner-spin-button {
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: 1s;
 }
 .cardFavor h2 {
     color: #fff;
     padding: 20px 0;
     filter: none;
+    transform: translateZ(20px);
 }
 .cardFavor h3.top {
     color: #e91e63;
@@ -368,12 +372,15 @@ input::-webkit-inner-spin-button {
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
 }
 
 .container .card .content {
     padding: 60px 10px 0;
     text-align: center;
     transition: 0.5s;
+    transform: translateZ(20px);
 }
 
 .container .card .content h2 {
@@ -410,6 +417,7 @@ input::-webkit-inner-spin-button {
     font-size: 1em;
     color: #fff;
     font-weight: 300;
+    line-height: 1em;
 }
 
 .container .card .content a {
