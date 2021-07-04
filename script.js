@@ -39,6 +39,7 @@ audioPlay();
 const renderContent = (result) => {
     let content = document.getElementById('data');
     let formSelect = document.getElementById('select');
+    let formSelectIn = document.getElementById('selectIn');
     let colorCourse;
     let cardsFavor = document.querySelector('.cardsFavor');
 
@@ -107,7 +108,11 @@ const renderContent = (result) => {
 
             formSelect.innerHTML += `
         <option value="${currencyCode.CharCode}">${currencyCode.Nominal} ${currencyCode.Name}</option>
-        `
+        `,
+
+        formSelectIn.innerHTML += `
+    <option value="${currencyCode.CharCode}">${currencyCode.Nominal} ${currencyCode.Name}</option>
+    `
     })
 
     // сохранение в localStorage
@@ -187,18 +192,26 @@ const convertValue = (result) => {
     // слушаем изменения в текстовом поле и в select 
     const inputIn = document.querySelector('#input');
     const inputOut = document.querySelector('#result');
+    const selectIn = document.querySelector('#selectIn');
     const select = document.querySelector('#select');
 
     inputIn.oninput = convert;
+    selectIn.oninput = convert;
     select.oninput = convert;
 
     function convert() {
-        inputOut.value = (parseFloat(inputIn.value) / result.Valute[select.value].Value).toFixed(2);
+        if ( select.value == selectIn.value ) { 
+            inputOut.value = inputIn.value;
+        } else if ( selectIn.value == "RUB") {
+            inputOut.value = (parseFloat(inputIn.value) / result.Valute[select.value].Value).toFixed(2);
+        } else if ( select.value == "RUB") {
+            inputOut.value = (parseFloat(inputIn.value) * result.Valute[selectIn.value].Value / 1).toFixed(2);
+        } else {
+            inputOut.value = (parseFloat(inputIn.value) * result.Valute[selectIn.value].Value / result.Valute[select.value].Value).toFixed(2);
+        }
+        
     }
 }
-
-
-document.addEventListener('DOMContentLoaded', () => {
 
     // анимация карточек
     VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
@@ -230,9 +243,3 @@ document.addEventListener('DOMContentLoaded', () => {
     //     "max-glare": 1,
     //     perspective: 2000
     // });
-})
-
-
-
-
-

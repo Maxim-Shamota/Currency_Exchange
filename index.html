@@ -27,8 +27,12 @@
             </div>
             <nav>
                 <ul class="toggle">
-                    <li class="toggle-menu toggle-menu1 active">Текущий курс</li>
-                    <li class="toggle-menu toggle-menu2">Конвертер</li>
+                    <li class="toggle-menu toggle-menu1 active">
+                        <span>Текущий курс</span>
+                    </li>
+                    <li class="toggle-menu toggle-menu2">
+                        <span>Конвертер</span>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -43,8 +47,8 @@
 
                     <div class="converter__title-out">
                         <h4 for="name">Отдаю:</h4>
-                        <select disabled class="form-control" id="exampleFormControlSelect1">
-                            <option value="RUB" selected>RUB — Рубли</option>
+                        <select class="form-control" id="selectIn">
+                            <option value="RUB" selected>1 Россиийский Рубль</option>
                         </select>
                         <div class="converter__inputs-item">
                             <input id="input" type="number" class="form-control" id="name" autofocus />
@@ -52,7 +56,8 @@
                     </div>
                     <div class="converter__title-in">
                         <h4 for="name">Получаю:</h4>
-                        <select id="select" class="form-control" id="exampleFormControlSelect2">
+                        <select id="select" class="form-control">
+                            <option value="RUB" selected>1 Россиийский Рубль</option>
                         </select>
                         <div class="converter__inputs-item">
                             <input id="result" type="number" class="form-control" id="name" />
@@ -75,7 +80,9 @@
             </div>
         </div>
         <div class="cards">
-            <h2 class="cards__h2">Текущий курс</h2>
+            <h2 class="cards__h2">
+                <span>Текущий курс</span>
+            </h2>
             <div class="container" id="data">
             </div>
         </div>
