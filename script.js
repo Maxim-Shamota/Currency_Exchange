@@ -173,21 +173,21 @@ const renderContent = (result) => {
     })
 }
 
-getCurrencies('https://www.cbr-xml-daily.ru/daily_json.js');
+getCurrencies();
 
 // setInterval(getCurrencies, 18000000);
 
 // функция получения курса валют и отображения их на странице
-async function getCurrencies(url) {
-    const loading = document.querySelector('.loading');
-    const response = await fetch(url);
-    loading.classList.add('active');
-    if (!response.ok) {
-        throw new Error(`Could not fetch ${url}, status: ${response.status}`);
-    }
+async function getCurrencies() {
+    // const loading = document.querySelector('.loading');
+    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+    // loading.classList.add('active');
+    // if (!response.ok) {
+    //     throw new Error(`Could not fetch https://www.cbr-xml-daily.ru/daily_json.js, status: ${response.status}`);
+    // }
     const data = await response.json();
     const result = await data;
-    loading.classList.remove('active');
+    // loading.classList.remove('active');
 
     renderContent(result);
     convertValue(result);

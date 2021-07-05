@@ -500,12 +500,11 @@ input::-webkit-inner-spin-button {
         filter: hue-rotate(360deg);
     }
 }
-.loading {
+/* .loading {
     display: none;
 }
 
 .loading.active {
-    display: none;
     position: relative;
     padding: 100px 0;
     display: flex;
@@ -513,7 +512,7 @@ input::-webkit-inner-spin-button {
     justify-content: center;
     align-items: center;
     animation: changeColor 5s linear infinite;
-}
+} */
 
 @keyframes changeColor {
     0% {
