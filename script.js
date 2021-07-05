@@ -173,15 +173,21 @@ const renderContent = (result) => {
     })
 }
 
-getCurrencies();
+getCurrencies('https://www.cbr-xml-daily.ru/daily_json.js');
 
-// setInterval(getCurrencies, 1800000);
+// setInterval(getCurrencies, 18000000);
 
 // функция получения курса валют и отображения их на странице
-async function getCurrencies() {
-    const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js');
+async function getCurrencies(url) {
+    const loading = document.querySelector('.loading');
+    const response = await fetch(url);
+    loading.classList.add('active');
+    if (!response.ok) {
+        throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+    }
     const data = await response.json();
     const result = await data;
+    loading.classList.remove('active');
 
     renderContent(result);
     convertValue(result);
@@ -226,34 +232,28 @@ VanillaTilt.init(document.querySelectorAll(".toggle-menu"), {
     glare: true,
     "max-glare": 1
 });
-    // VanillaTilt.init(document.querySelectorAll(".converter"), {
-    //     max: 10,
-    //     speed: 400,
-    //     glare: true,
-    //     "max-glare": 1,
-    //     perspective: 2000
-    // });
 
-const dataAnim = document.getElementById("data");
-dataAnim.addEventListener('mouseover', function(e) {
-    if(e.target.classList == 'card') {
-        VanillaTilt.init(document.querySelectorAll(".card"), {
-            max: 25,
-            speed: 100,
-            glare: true,
-            "max-glare": 1
-        });
-    }
-});
-const favorAnim = document.querySelector(".cardsFavor");
-favorAnim.addEventListener('mouseover', function(e) {
-    if(e.target.classList == 'cardFavor') {
-        VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
-            max: 25,
-            speed: 100,
-            glare: true,
-            "max-glare": 1,
-            scale: 1.1
-        });
-    }
-})
+//закомментировал анимацию карточек т.к. она подгружает очень сильно графический процессор
+// const dataAnim = document.getElementById("data");
+// dataAnim.addEventListener('mouseover', function(e) {
+//     if(e.target.classList == 'card') {
+//         VanillaTilt.init(document.querySelectorAll(".card"), {
+//             max: 25,
+//             speed: 100,
+//             glare: true,
+//             "max-glare": 1
+//         });
+//     }
+// });
+// const favorAnim = document.querySelector(".cardsFavor");
+// favorAnim.addEventListener('mouseover', function(e) {
+//     if(e.target.classList == 'cardFavor') {
+//         VanillaTilt.init(document.querySelectorAll(".cardFavor"), {
+//             max: 25,
+//             speed: 100,
+//             glare: true,
+//             "max-glare": 1,
+//             scale: 1.1
+//         });
+//     }
+// })
